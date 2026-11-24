@@ -1,0 +1,306 @@
+# Proje: OurBloom — İkimize Özel Dijital Çiçek Bahçesi
+
+## 1. Projenin Amacı
+
+Sevgilimle birlikte kullanabileceğimiz, yalnızca ikimize ait olan, romantik ama modern bir web platformu tasarla.
+
+Bu proje sıradan bir sevgili sitesi veya hazır romantik şablonlardan oluşan bir web sitesi olmamalı. Amacımız, birlikte vakit geçirebileceğimiz, birbirimize özel dijital çiçek buketleri tasarlayabileceğimiz ve oluşturduğumuz tasarımları kalıcı anılar olarak saklayabileceğimiz kişisel bir alan oluşturmak.
+
+Platformun en önemli özelliği, kullanıcıların kendi çiçek buketlerini detaylı şekilde tasarlayabilmesi ve bu tasarımları 3D olarak inceleyebilmesidir.
+
+Web sitesi yalnızca iki kişiye özel olacak. Benim oluşturduğum buketleri sevgilim görebilmeli, onun oluşturduklarını da ben görebilmeliyim.
+
+## 2. Tasarım Dili ve Kullanıcı Deneyimi
+
+Modern, zarif, romantik ve minimalist bir tasarım dili kullan.
+
+Tasarım kesinlikle yapay zekâ tarafından oluşturulmuş standart bir romantik web sitesi gibi görünmemeli.
+
+Tasarım prensipleri:
+- Minimalist ve premium görünüm.
+- Pastel renkler, krem, kırık beyaz, açık pembe ve soft yeşil tonları.
+- Gereksiz kalp animasyonlarından ve aşırı romantik dekorasyonlardan kaçın.
+- Zarif tipografi ve dengeli boşluk kullanımı.
+- Hafif gölgeler, yumuşak köşeler ve modern kart tasarımları.
+- Mikro animasyonlar ve akıcı sayfa geçişleri.
+- Kullanıcıyı yormayan sade navigasyon.
+- Hem masaüstünde hem mobilde tutarlı deneyim.
+
+### Mobil Öncelikli Tasarım
+
+Responsive tasarım projenin en önemli gereksinimlerinden biridir.
+
+Özellikle iPhone cihazlarda kusursuz çalışmalı.
+
+Dikkat edilmesi gerekenler:
+- iPhone ekran boyutlarına uygun responsive yerleşim.
+- Safari tarayıcısıyla uyumluluk.
+- Safe Area desteği (notch, Dynamic Island ve alt gezinme alanları).
+- Dokunmatik kullanım için yeterli buton boyutları.
+- Mobilde taşma, yatay kaydırma ve bozuk yerleşim olmaması.
+- 3D buket görüntüleyicisinin mobil cihazlarda performanslı çalışması.
+- Mobilde kolay kullanılabilen tasarım paneli.
+- Alt navigasyon menüsü.
+
+## 3. Ana Sayfa — Our Space
+
+Ana sayfa iki kişiye özel dijital alanımız olacak.
+
+İçermesi gereken bölümler:
+
+- İki kişinin isimlerinin yer aldığı kişisel karşılama alanı.
+- Birlikte geçirdiğimiz günleri gösteren sayaç (başlangıç tarihi ayarlanabilir).
+- Son oluşturulan çiçek buketi.
+- Son kaydedilen anılar.
+- Birbirimize özel kısa mesaj alanı.
+- Çiçek tasarlama sayfasına yönlendiren belirgin bir buton.
+
+Ana sayfa sade ve duygusal bir atmosfer sunmalı. İçerik yoğunluğundan kaçınılmalı.
+
+## 4. Çiçek Buketi Tasarım Stüdyosu (Projenin Ana Özelliği)
+
+Bu bölüm projenin merkezinde yer almalı.
+
+Kullanıcılar sıfırdan kendi çiçek buketlerini tasarlayabilmeli.
+
+### 4.1. Çiçek Türü Seçimi
+
+Kullanıcılar buketlerine farklı çiçek türleri ekleyebilmeli.
+
+Başlangıçta aşağıdaki çiçekleri destekle:
+
+- Gül
+- Lale
+- Papatya
+- Orkide
+- Ayçiçeği
+- Şakayık
+- Lilyum
+- Lavanta
+- Ortanca
+- Karanfil
+- Sümbül
+- Gelincik
+
+Her çiçeğin kendine özgü 3D modeli ve renk seçenekleri olmalı.
+
+Çiçekler tek tek eklenebilmeli ve aynı türden birden fazla çiçek kullanılabilmeli.
+
+### 4.2. Çiçek Özelleştirme
+
+Her çiçek için ayrı ayrı özelleştirme seçenekleri sun:
+
+- Çiçek türü.
+- Çiçek rengi.
+- Çiçek sayısı.
+- Sap uzunluğu.
+- Çiçeklerin buket içerisindeki konumu.
+- Çiçeklerin yönü ve açısı.
+- Çiçeklerin boyutu.
+
+Renk seçimi için hazır renk paletleri ve mümkünse gelişmiş renk seçici kullan.
+
+### 4.3. Buket Şekli
+
+Kullanıcılar buketin genel formunu belirleyebilmeli.
+
+Örnek buket şekilleri:
+
+- Yuvarlak buket.
+- Klasik buket.
+- Şelale buket.
+- El buketi.
+- Doğal ve dağınık buket.
+- Minimal buket.
+- Büyük ve gösterişli buket.
+
+Seçilen şekle göre çiçeklerin yerleşimi otomatik olarak düzenlenmeli. Kullanıcı isterse yerleşime manuel müdahale edebilmeli.
+
+### 4.4. Buket Ambalajı ve Süslemeler
+
+Buket yalnızca çiçeklerden oluşmamalı.
+
+Özelleştirilebilir ambalaj seçenekleri sun:
+
+- Kraft kâğıt.
+- Beyaz ambalaj.
+- Pembe ambalaj.
+- Şeffaf ambalaj.
+- Kumaş ambalaj.
+- Renkli kurdeleler.
+- Saten kurdele.
+- Minimal ip bağlama.
+
+Ambalaj rengi, şekli ve kurdele tipi değiştirilebilmeli.
+
+### 4.5. 3D Buket Görüntüleyici
+
+Bu özellik özellikle kaliteli tasarlanmalı.
+
+Kullanıcı oluşturduğu buketi gerçekçi bir 3D ortamda görebilmeli.
+
+Beklenen özellikler:
+
+- 360 derece döndürülebilir buket.
+- Yakınlaştırma ve uzaklaştırma.
+- Farklı açılardan inceleme.
+- Çiçek detaylarını yakından görebilme.
+- Gerçekçi ışıklandırma ve gölgeler.
+- Çiçeklerin birbirleriyle doğal biçimde konumlandırılması.
+- Seçilen renklerin 3D modele anlık yansıması.
+- Mobil cihazlarda performanslı görüntüleme.
+
+3D görüntüleyici için Three.js veya React Three Fiber gibi teknolojiler değerlendirilebilir.
+
+Önemli: 3D modeller yalnızca basit geometrik şekillerden oluşmamalı. Çiçeklerin yaprakları, taç yaprakları, sapları ve buket ambalajları görsel olarak birbirinden ayırt edilebilir olmalı.
+
+### 4.6. Tasarımı Kaydetme
+
+Kullanıcı tasarladığı buketi kaydedebilmeli.
+
+Kayıt sırasında:
+- Bukete özel isim verebilmeli.
+- Tasarım tarihini kaydedebilmeli.
+- İsterse özel bir tarih belirleyebilmeli.
+- Bukete kısa bir not ekleyebilmeli.
+- Tasarımın 3D önizlemesi saklanmalı.
+- Buketin tüm özelleştirme bilgileri kaydedilmeli.
+
+Örnek:
+
+Buket adı: İlk Baharım
+
+Tarih: 24 Kasım 2026
+
+Not: Sana aldığım ilk çiçekleri unutmadım.
+
+Kaydedilen buket daha sonra tekrar açılabilmeli ve düzenlenebilmelidir.
+
+## 5. Anı Koleksiyonu — Our Memories
+
+Oluşturduğumuz bütün buketler bu alanda saklanmalı.
+
+Bir dijital çiçek arşivi gibi çalışmalı.
+
+Özellikler:
+- Kaydedilen tüm buketleri görüntüleme.
+- Buketleri tarihe göre sıralama.
+- Buket ismine göre arama.
+- Buket detaylarını görüntüleme.
+- 3D olarak yeniden inceleme.
+- Tasarımı düzenleme.
+- Yeni bir tasarım olarak kopyalama.
+- Buket sahibini gösterme.
+- Bukete eklenen özel notu görüntüleme.
+
+Her buket bir anı niteliğinde olmalı.
+
+Koleksiyon ekranında kartlar halinde buketlerin önizlemeleri, isimleri ve tarihleri gösterilmeli.
+
+## 6. İki Kişilik Özel Alan
+
+Platform yalnızca iki kişinin kullanımı için tasarlanmalı.
+
+İki ayrı kullanıcı hesabı bulunmalı.
+
+Temel işleyiş:
+
+- Ben kendi hesabımla giriş yapabilmeliyim.
+- Sevgilim kendi hesabıyla giriş yapabilmeli.
+- İki hesap aynı özel alana bağlı olmalı.
+- Oluşturduğum buketler sevgilimin hesabında da görünmeli.
+- Onun oluşturduğu buketler benim hesabımda da görünmeli.
+- Her tasarımın kimin tarafından oluşturulduğu belirtilmeli.
+- Her iki kullanıcı da ortak buket koleksiyonunu görüntüleyebilmeli.
+
+Kullanıcılar birbirlerinin tasarımlarını görüntüleyebilmeli ancak tasarım sahipliği korunmalı.
+
+## 7. Özel Mesajlar
+
+Birbirimize kısa mesajlar bırakabileceğimiz küçük bir alan oluştur.
+
+- Yeni mesaj oluşturma.
+- Mesajı karşı tarafa gönderme.
+- Mesaj geçmişini görüntüleme.
+- Mesaj tarihini gösterme.
+- Okundu bilgisi.
+- Sade ve estetik mesaj kartları.
+
+Bu özellik tam kapsamlı bir sohbet uygulamasına dönüşmemeli. Amacı birbirimize küçük notlar bırakabilmek.
+
+## 8. Sayfalar ve Navigasyon
+
+Aşağıdaki sayfaları oluştur:
+
+1. Login — Özel giriş ekranı.
+2. Home — İkimize özel ana sayfa.
+3. Flower Studio — 3D çiçek buketi tasarım stüdyosu.
+4. My Bouquets — Kaydedilen buketler.
+5. Memories — Ortak anı koleksiyonu.
+6. Messages — Özel mesajlar.
+7. Settings — Hesap ve kişisel ayarlar.
+
+Masaüstünde sade bir sidebar, mobilde ise alt navigasyon menüsü kullan.
+
+## 9. Teknik Gereksinimler
+
+Proje gerçek bir web uygulaması olarak geliştirilmeye uygun tasarlanmalı.
+
+Önerilen teknoloji tercihleri:
+
+- Frontend: React veya Next.js.
+- Dil: TypeScript.
+- Stil: Tailwind CSS.
+- 3D: Three.js / React Three Fiber.
+- Backend: ASP.NET Core Web API.
+- Veritabanı: PostgreSQL.
+- Kimlik doğrulama: Güvenli Cookie tabanlı Authentication.
+- Görsel depolama: Uygun bir dosya depolama çözümü.
+
+Veri modeli en azından şu yapıları desteklemeli:
+
+- Users
+- Couples / SharedSpaces
+- Bouquets
+- BouquetFlowers
+- BouquetPackaging
+- Memories
+- Messages
+
+Her buketin yapılandırması tekrar açılabilecek şekilde JSON veya ilişkisel veri yapısıyla saklanmalı.
+
+Güvenlik:
+- Sadece yetkilendirilmiş iki kullanıcı platforma erişebilmeli.
+- Başka kullanıcılar ortak alana erişememeli.
+- API tarafında kullanıcı ve ortak alan bazlı yetkilendirme yapılmalı.
+- Oturumlar güvenli şekilde yönetilmeli.
+- Kullanıcıların birbirlerine ait olmayan özel verilere erişmesi engellenmeli.
+
+## 10. Önemli Tasarım ve Geliştirme Kuralları
+
+- Önce kullanıcı deneyimini ve arayüz tasarımını oluştur.
+- Gereksiz özellikler ekleyerek projeyi karmaşıklaştırma.
+- Çiçek tasarım stüdyosuna en yüksek önceliği ver.
+- 3D görüntüleyici gerçekten kullanılabilir olmalı.
+- Mobil deneyimi masaüstü deneyiminin küçültülmüş hali olarak düşünme.
+- Tasarımların kaydedilmesi ve tekrar yüklenmesi temel gereksinimdir.
+- İki kullanıcının aynı ortak alanı kullanması gerçek backend üzerinden çalışmalı.
+- Sahte butonlar veya yalnızca görsel amaçlı çalışan özellikler oluşturma.
+- Boş ekranlar yerine gerçekçi örnek içerikler kullan.
+- Performans ve erişilebilirliği önemse.
+
+## 11. Beklenen Sonuç
+
+Ortaya çıkacak ürün, iki kişinin kendilerine ait küçük bir dijital dünyası gibi hissettirmeli.
+
+En önemli deneyim şu olmalı:
+
+Ben web sitesine giriyorum, Flower Studio bölümünü açıyorum, sevgilim için istediğim çiçekleri seçiyorum, renklerini belirliyorum, buketin şeklini ve ambalajını ayarlıyorum. Daha sonra tasarladığım buketi 3D olarak inceliyorum.
+
+Buketimi ona özel bir isim ve tarih vererek kaydediyorum.
+
+Sevgilim kendi hesabına girdiğinde benim oluşturduğum buketi görebiliyor. İsterse kendi tasarımını oluşturup ortak koleksiyonumuza ekleyebiliyor.
+
+Yıllar sonra bile açıp bakabileceğimiz, birlikte oluşturduğumuz dijital çiçeklerden oluşan bir anı arşivimiz oluyor.
+
+**Ürünün temel felsefesi: Her buket bir tasarım, her tasarım ise ikimize ait bir anı olmalı.**

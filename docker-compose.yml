@@ -1,0 +1,41 @@
+# Geliştirme:   docker compose up -d db
+# Tam kurulum:  docker compose --profile app up -d --build   (HTTPS için önünde Caddy/Nginx olmalı, README'ye bak)
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ourbloom
+      POSTGRES_USER: ourbloom
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ourbloom_dev}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ourbloom -d ourbloom"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    profiles: ["app"]
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Default: Host=db;Port=5432;Database=ourbloom;Username=ourbloom;Password=${POSTGRES_PASSWORD:-ourbloom_dev}
+      Storage__Root: /data
+      ReverseProxy__Enabled: "true"
+      Seed__SampleContent: ${SEED_SAMPLE_CONTENT:-true}
+    volumes:
+      - appdata:/data
+    ports:
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  pgdata:
+  appdata:

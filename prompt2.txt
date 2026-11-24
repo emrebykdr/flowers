@@ -1,0 +1,85 @@
+## Özel Giriş Sistemi ve Hesap Yönetimi
+
+Platform yalnızca Emre ve Gözde tarafından kullanılacağı için herkese açık kayıt olma sistemi oluşturma.
+
+### 1. Önceden Tanımlanmış Kullanıcılar
+
+Başlangıçta iki kullanıcı hesabı statik olarak tanımlanmalı:
+
+| Kullanıcı | Kullanıcı adı | İlk şifre |
+|---|---|---|
+| Kullanıcı 1 | emre | eg2604 |
+| Kullanıcı 2 | gozde | eg2604 |
+
+- Sistemde yalnızca bu iki hesap bulunmalı.
+- Kullanıcılar kullanıcı adı ve şifre ile giriş yapmalı.
+- Yeni hesap oluşturma veya kayıt olma ekranı bulunmamalı.
+- Giriş başarılı olduğunda kullanıcının kendi hesabına ait oturum açılmalı.
+- Kullanıcı adı ve şifre alanları mobil cihazlarda kolay kullanılmalı.
+- Şifre alanında göster/gizle özelliği bulunmalı.
+
+### 2. Statik Kullanıcı Verileri ve Şifre Yönetimi
+
+İlk kurulumda iki kullanıcının bilgileri önceden tanımlanmış olarak gelmeli.
+
+Ancak önemli bir gereksinim: Şifreler kaynak kodunda açık metin olarak tutulmamalı.
+
+- Başlangıç kullanıcıları seed mekanizmasıyla oluşturulmalı.
+- Şifreler güvenli hash algoritmasıyla saklanmalı.
+- Kullanıcılar giriş yaptıktan sonra kendi şifrelerini değiştirebilmeli.
+- Şifre değişikliği veritabanına kalıcı olarak kaydedilmeli.
+- Sayfa yenilendiğinde veya uygulama yeniden başlatıldığında değiştirilen şifre korunmalı.
+- Şifre değişikliği yalnızca ilgili kullanıcının hesabını etkilemeli.
+
+### 3. Şifre Değiştirme Ekranı
+
+Settings / Account Settings bölümünde şifre değiştirme alanı oluştur.
+
+İçermesi gereken alanlar:
+
+- Mevcut şifre.
+- Yeni şifre.
+- Yeni şifre tekrar.
+
+İşleyiş:
+1. Kullanıcı mevcut şifresini girer.
+2. Yeni şifresini belirler.
+3. Yeni şifresini tekrar girerek doğrular.
+4. Sistem mevcut şifreyi kontrol eder.
+5. Yeni şifre için güvenlik ve doğrulama kontrolleri yapılır.
+6. Şifre başarıyla değiştirilirse veritabanına kaydedilir.
+7. Kullanıcıya başarılı işlem bildirimi gösterilir.
+
+Güvenlik kuralları:
+- Yeni şifre en az 8 karakter olmalı.
+- Mevcut şifre yanlışsa değişiklik yapılmamalı.
+- İki yeni şifre eşleşmiyorsa hata gösterilmeli.
+- Şifreler hiçbir zaman loglara veya istemci tarafındaki açık metin depolama alanlarına yazılmamalı.
+- Şifre değiştirme işlemi sunucu tarafında doğrulanmalı.
+- Şifre değiştirildiğinde mevcut oturumların geçerliliği güvenli şekilde sonlandırılmalı veya yenilenmeli.
+
+### 4. Oturum ve Yetkilendirme
+
+- Güvenli Cookie tabanlı Authentication kullan.
+- Kullanıcı giriş yaptıktan sonra oturumu koru.
+- Çıkış yapma özelliği ekle.
+- Yetkisiz kullanıcıların özel sayfalara erişmesini engelle.
+- Kullanıcı yalnızca kendi hesabının şifresini değiştirebilmeli.
+- İki kullanıcı aynı ortak dijital alanı görüntüleyebilmeli.
+- Ortak alana bağlı olmayan kullanıcıların verilere erişimi engellenmeli.
+
+### 5. Giriş Ekranı Tasarımı
+
+Giriş ekranı sade, romantik ve premium görünmeli.
+
+- Proje logosu veya OurBloom yazısı.
+- Zarif bir karşılama metni.
+- Kullanıcı adı alanı.
+- Şifre alanı.
+- Giriş yap butonu.
+- Hatalı girişte sade hata bildirimi.
+- Mobil cihazlara uygun yerleşim.
+
+Herkese açık kayıt ol, şifremi unuttum veya üçüncü taraf giriş seçenekleri oluşturma. Şifre unutulursa ilk kurulum/yönetici üzerinden güvenli bir sıfırlama yöntemi kullanılabilir.
+
+**Önemli:** Başlangıç kullanıcıları sabit olsa da şifreler değiştirilebilir olmalı. Statik kullanıcı tanımlaması ile kalıcı şifre yönetimini birbirinden ayır. Kullanıcıların değiştirdiği şifreler yeniden seed işlemiyle eski haline döndürülmemeli.
