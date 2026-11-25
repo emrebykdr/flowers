@@ -1,0 +1,7 @@
+**/bin
+**/obj
+**/App_Data
+**/node_modules
+frontend/dist
+.git
+*.md

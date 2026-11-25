@@ -2,6 +2,7 @@ import { useQueryClient, type QueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { BouquetPlaceholder } from '../../components/brand'
+import { useTone } from '../../app/session'
 import { Avatar } from '../../components/ui'
 import type { BouquetSummary } from '../../domain/types'
 import { Api } from '../../lib/api'
@@ -73,10 +74,11 @@ export function BouquetImage({ summary, className, eager }: { summary: Pick<Bouq
   )
 }
 
-export function OwnerTag({ summary, partnerIndex }: { summary: BouquetSummary; partnerIndex?: number }) {
+export function OwnerTag({ summary }: { summary: BouquetSummary }) {
+  const tone = useTone()
   return (
     <span className="inline-flex items-center gap-1.5">
-      <Avatar name={summary.owner.displayName} index={summary.isMine ? 0 : (partnerIndex ?? 1)} size="sm" />
+      <Avatar name={summary.owner.displayName} index={tone(summary.owner.username)} size="sm" />
       <span>{summary.isMine ? 'Sen' : summary.owner.displayName}</span>
     </span>
   )

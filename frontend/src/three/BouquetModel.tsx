@@ -46,7 +46,7 @@ function useGroupMaterials(flowers: FlowerGroup[], selectedId: string | null | u
       m.petal2.color.set(accentColor(f.color))
       const selected = f.id === selectedId
       m.petal.emissive.set(selected ? '#fff4ec' : '#000000')
-      m.petal.emissiveIntensity = selected ? 0.16 : 0
+      m.petal.emissiveIntensity = selected ? 0.07 : 0
     }
     invalidate()
   })

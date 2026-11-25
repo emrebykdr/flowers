@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Check, CheckCheck, Feather, Send, Trash } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { useMe } from '../../app/session'
+import { useEffect, useMemo, useState } from 'react'
+import { useMe, useTone } from '../../app/session'
 import { useFeedback } from '../../components/feedback'
 import { Avatar, Button, Card, EmptyState, PageHeader, Skeleton, TextArea } from '../../components/ui'
 import type { MessageItem } from '../../domain/types'
@@ -12,6 +12,7 @@ import { cn } from '../../lib/image'
 const MAX = 500
 
 function NoteCard({ m, fresh, onDelete }: { m: MessageItem; fresh: boolean; onDelete: () => void }) {
+  const tone = useTone()
   return (
     <article className={cn('flex animate-rise', m.isMine ? 'justify-end' : 'justify-start')}>
       <div
@@ -21,7 +22,7 @@ function NoteCard({ m, fresh, onDelete }: { m: MessageItem; fresh: boolean; onDe
         )}
       >
         <header className="flex items-center gap-2 text-sm">
-          <Avatar name={m.sender.displayName} index={m.isMine ? 0 : 1} size="sm" />
+          <Avatar name={m.sender.displayName} index={tone(m.sender.username)} size="sm" />
           <span className="font-semibold text-ink">{m.isMine ? 'Sen' : m.sender.displayName}</span>
           <span className="text-muted">· {formatDateTime(m.createdAt)}</span>
           {fresh && <span className="ml-1 rounded-full bg-blush-500 px-2 py-0.5 text-[11px] font-bold text-paper">yeni</span>}
@@ -60,7 +61,7 @@ export default function MessagesPage() {
   const qc = useQueryClient()
   const { toast, confirm } = useFeedback()
   const [text, setText] = useState('')
-  const freshIds = useRef<Set<string> | null>(null)
+  const [freshIds, setFreshIds] = useState<Set<string> | null>(null)
 
   const query = useInfiniteQuery({
     queryKey: ['messages'],
@@ -76,8 +77,7 @@ export default function MessagesPage() {
   useEffect(() => {
     if (!query.data) return
     const unread = items.filter((m) => !m.isMine && !m.readAt)
-    if (freshIds.current === null) freshIds.current = new Set(unread.map((m) => m.id))
-    else unread.forEach((m) => freshIds.current!.add(m.id))
+    if (unread.length) setFreshIds((prev) => new Set([...(prev ?? []), ...unread.map((m) => m.id)]))
     if (unread.length) {
       Api.markMessagesRead()
         .then(() => {
@@ -168,7 +168,7 @@ export default function MessagesPage() {
             <NoteCard
               key={m.id}
               m={m}
-              fresh={!!freshIds.current?.has(m.id)}
+              fresh={!!freshIds?.has(m.id)}
               onDelete={async () => {
                 const ok = await confirm({ title: 'Not silinsin mi?', text: 'İkiniz için de kaybolur.', confirmLabel: 'Sil', danger: true })
                 if (ok) remove.mutate(m.id)

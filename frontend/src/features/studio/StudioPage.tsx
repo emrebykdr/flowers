@@ -269,7 +269,7 @@ export default function StudioPage() {
             </p>
             <p className="truncate text-xs text-muted">
               {total} dal · {shapeName}
-              {studio.dirty ? ' · kaydedilmedi' : ' · kayıtlı'}
+              {studio.bouquetId ? (studio.dirty ? ' · kaydedilmedi' : ' · kayıtlı') : ' · taslak'}
             </p>
           </div>
           <IconButton label="Geri al" disabled={!studio.past.length} onClick={studio.undo}>

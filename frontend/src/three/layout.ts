@@ -60,7 +60,7 @@ interface ShapeParams {
 }
 
 const SHAPES: Record<BouquetShape, ShapeParams> = {
-  classic: { density: 0.78, dome: 0.95, height: 1.0, jitterH: 1.4, jitterR: 0.05, lean: 1.0, scale: 1.0, spread: 1.0 },
+  classic: { density: 0.7, dome: 0.95, height: 1.0, jitterH: 1.4, jitterR: 0.05, lean: 1.0, scale: 1.0, spread: 1.0 },
   round: { density: 0.95, dome: 0.75, height: 0.96, jitterH: 0.4, jitterR: 0.02, lean: 1.2, scale: 1.0, spread: 0.92 },
   handtied: { density: 0.62, dome: 0.7, height: 1.04, jitterH: 2.6, jitterR: 0.1, lean: 1.1, scale: 1.0, spread: 1.08 },
   cascade: { density: 0.8, dome: 0.85, height: 1.0, jitterH: 1.2, jitterR: 0.05, lean: 1.0, scale: 1.0, spread: 0.92 },
@@ -122,11 +122,12 @@ export function computeLayout(design: BouquetDesign): BouquetLayout {
 
   // 2. Şelale: uzun ve sarkan türler öne akar
   if (design.shape === 'cascade' && items.length >= 4) {
+    // İri odak çiçekler (şakayık, ortanca...) tepede kalır; sarkan kısma hafif türler iner
     const candidates = items
-      .filter((i) => !i.manual)
-      .map((i) => ({ i, score: (i.role === 'spray' ? 3 : i.role === 'spike' ? 2 : i.role === 'middle' ? 1 : 0) + i.group.stemLength / 100 + rand() * 0.5 }))
+      .filter((i) => !i.manual && i.role !== 'focal')
+      .map((i) => ({ i, score: (i.role === 'spray' ? 3 : i.role === 'spike' ? 2 : 1) + i.group.stemLength / 100 + rand() * 0.5 }))
       .sort((a, b) => b.score - a.score)
-    const nTail = Math.max(1, Math.round(items.length * 0.3))
+    const nTail = Math.min(candidates.length, Math.max(1, Math.round(items.length * 0.3)))
     candidates.slice(0, nTail).forEach((c) => (c.i.tail = true))
   }
 
@@ -134,7 +135,7 @@ export function computeLayout(design: BouquetDesign): BouquetLayout {
   const area = core.reduce((a, it) => a + Math.PI * (it.r * 0.92) ** 2, 0)
   const R = Math.max(4.5, Math.sqrt(area / (Math.PI * P.density)) * P.spread)
   const Hc = (21 + R * 0.32) * P.height
-  const drop = R * 0.42 * P.dome
+  const drop = R * 0.48 * P.dome
   const domeY = (rr: number) => Hc - (drop * rr * rr) / (R * R)
   const thetaOffset = rand() * Math.PI * 2
 
@@ -200,8 +201,8 @@ export function computeLayout(design: BouquetDesign): BouquetLayout {
     }
   }
 
-  const rimY = Math.max(9, domeY(R) - 7 - (design.shape === 'minimal' ? 4 : 0))
-  const rimRadius = R * 0.86 + 1.4
+  const rimY = Math.max(9, domeY(R) - 4.2 - (design.shape === 'minimal' ? 4 : 0))
+  const rimRadius = R * 0.8 + 1.2
   for (const it of core) {
     if (!it.manual) it.pos.y = Math.max(it.pos.y, rimY + 1.5)
   }
@@ -211,7 +212,8 @@ export function computeLayout(design: BouquetDesign): BouquetLayout {
   tails.forEach((it, k) => {
     const f = (k + 1) / tails.length
     const side = k % 2 === 0 ? 1 : -1
-    it.pos.set(side * R * 0.32 * (1 - f * 0.6) + range(rand, -1, 1), rimY + 1 - f * (rimY + 9), R * 0.82 + 2 + f * 2.5)
+    // Önde, tepeden aşağı doğru incelen bir akış; en alttaki baş bağlama noktasının biraz altında kalır
+    it.pos.set(side * R * 0.3 * (1 - f * 0.6) + range(rand, -1, 1), rimY + 2 - f * (rimY + 4), R * 0.82 + 3 + f * 2.5)
   })
 
   // 7. Yön, sap eğrisi
@@ -332,8 +334,8 @@ export function computeLayout(design: BouquetDesign): BouquetLayout {
   let topY = rimY
   let extentR = R
   for (const s of stems) {
-    topY = Math.max(topY, s.head.y + 4 * s.scale)
-    extentR = Math.max(extentR, Math.hypot(s.head.x, s.head.z) + 4)
+    topY = Math.max(topY, s.head.y + FLOWER_MAP[s.type].headRadius * 1.7 * s.scale)
+    extentR = Math.max(extentR, Math.hypot(s.head.x, s.head.z) + FLOWER_MAP[s.type].headRadius * s.scale)
   }
   const minY = Math.min(bottomY, ...stems.map((s) => s.head.y - 6))
   const center = new Vector3(0, (topY + minY) / 2, 0)

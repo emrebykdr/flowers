@@ -16,7 +16,13 @@ export default function LabPage() {
   const thumbs = params.get('thumbs') === '1'
 
   const design = useMemo<BouquetDesign>(() => {
-    const flowers = only
+    const mix = params.get('mix')
+    const flowers = mix
+      ? mix.split(',').map((p) => {
+          const [t, n, c] = p.split(':')
+          return createFlowerGroup(t as FlowerType, Number(n ?? 1), c ? '#' + c : undefined)
+        })
+      : only
       ? [createFlowerGroup(only, count)]
       : [
           createFlowerGroup('rose', 5, '#e8a5ad'),
@@ -29,10 +35,10 @@ export default function LabPage() {
       seed: 7,
       flowers,
       packaging: {
-        wrapMaterial: only ? 'none' : wrap,
+        wrapMaterial: only && !mix ? 'none' : wrap,
         wrapColor: wrap === 'kraft' ? '#c49a6c' : wrap === 'pink' ? '#efc4c4' : wrap === 'fabric' ? '#dccdb5' : '#f5f1ea',
         wrapShape,
-        ribbonStyle: only ? 'none' : ribbon,
+        ribbonStyle: only && !mix ? 'none' : ribbon,
         ribbonColor: ribbon === 'twine' ? '#b89a6e' : '#efe6dc',
         bow: true,
       },

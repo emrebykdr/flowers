@@ -19,7 +19,8 @@ import { ApiError, onUnauthorized } from './lib/api'
 // 3D kullanan sayfalar ayrı parçada; giriş ve ana sayfa hızlı açılır.
 const StudioPage = lazy(() => import('./features/studio/StudioPage'))
 const BouquetDetailPage = lazy(() => import('./features/bouquets/BouquetDetailPage'))
-const LabPage = lazy(() => import('./dev/LabPage'))
+// Yalnızca geliştirmede: 3D modelleri hızlıca görmek için /lab
+const LabPage = import.meta.env.DEV ? lazy(() => import('./dev/LabPage')) : null
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,7 +48,7 @@ function NotFound() {
 
 const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
-  ...(import.meta.env.DEV ? [{ path: '/lab', element: <LabPage /> }] : []),
+  ...(LabPage ? [{ path: '/lab', element: <LabPage /> }] : []),
   {
     element: <RequireAuth />,
     children: [

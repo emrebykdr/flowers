@@ -15,6 +15,13 @@ export function useMe(): Session {
   return session
 }
 
+/** Avatar rengi kişiye sabit: iki kullanıcı adının alfabetik sırasına göre. */
+export function useTone() {
+  const { user, partner } = useMe()
+  const first = [user.username, partner?.username ?? '~'].sort()[0]
+  return (username: string) => (username === first ? 0 : 1)
+}
+
 export function useSessionQuery() {
   return useQuery({
     queryKey: ['session'],

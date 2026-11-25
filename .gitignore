@@ -1,7 +1,23 @@
-node_modules/
-.next/
-dist/
-build/
-out/
+# .NET
+backend/**/bin/
+backend/**/obj/
+backend/**/App_Data/
+backend/**/wwwroot/
+*.user
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+
+# Ortam
 .env
-.env.local
+.env.*
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+bin/
+obj/
+backend/OurBloom.Api/storage/keys/
+backend/OurBloom.Api/storage/previews/

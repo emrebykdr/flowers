@@ -122,6 +122,13 @@ export function FlowersPanel({ onFocusGroup }: { onFocusGroup: (id: string) => v
   const countByType = new Map<FlowerType, number>()
   for (const f of design.flowers) countByType.set(f.type, (countByType.get(f.type) ?? 0) + f.count)
 
+  // 3D'de dokunulan çiçeğin satırı görünür olsun
+  useEffect(() => {
+    if (!selectedId) return
+    const t = window.setTimeout(() => document.getElementById(`group-${selectedId}`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 80)
+    return () => window.clearTimeout(t)
+  }, [selectedId])
+
   const add = (type: FlowerType) => {
     const result = addFlower(type)
     if (result === 'limit') toast(`Bir bukete en fazla ${MAX_STEMS} dal sığar.`, 'error')
@@ -142,7 +149,7 @@ export function FlowersPanel({ onFocusGroup }: { onFocusGroup: (id: string) => v
               const info = FLOWER_MAP[g.type]
               const open = g.id === selectedId
               return (
-                <li key={g.id} className={cn('px-3 transition', open && 'bg-cream/60')}>
+                <li key={g.id} id={`group-${g.id}`} className={cn('scroll-mt-4 px-3 transition', open && 'bg-cream/60')}>
                   <div className="flex items-center gap-3 py-2.5">
                     <button
                       type="button"

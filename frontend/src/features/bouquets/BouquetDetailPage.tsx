@@ -2,12 +2,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BookOpen, ChevronLeft, Copy, Pencil, Rotate3d, RotateCcw, Trash, ZoomIn, ZoomOut } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
+import { useTone } from '../../app/session'
 import { useFeedback } from '../../components/feedback'
 import { Avatar, Button, IconButton, Spinner } from '../../components/ui'
 import { FLOWER_MAP, RIBBONS, SHAPES, WRAP_MAP, WRAP_SHAPES } from '../../domain/catalog'
 import type { BouquetDetail } from '../../domain/types'
 import { Api, ApiError } from '../../lib/api'
-import { formatDate, withSuffix } from '../../lib/format'
+import { formatDate, toDateOnly, withSuffix } from '../../lib/format'
 import { cn } from '../../lib/image'
 import { BouquetViewer, type ViewerHandle } from '../../three/BouquetViewer'
 import { invalidateBouquetQueries } from './shared'
@@ -40,10 +41,10 @@ function Composition({ detail }: { detail: BouquetDetail }) {
         </div>
         <div className="rounded-2xl bg-ivory/70 p-3">
           <dt className="text-xs font-semibold text-muted">Ambalaj</dt>
-          <dd className="mt-0.5 flex items-center gap-2 text-ink">
-            {pk.wrapMaterial !== 'none' && <span className="size-3.5 rounded-full border border-black/10" style={{ background: pk.wrapColor }} />}
+          <dd className="mt-0.5 text-ink">
+            {pk.wrapMaterial !== 'none' && <span className="mr-1.5 inline-block size-3 rounded-full border border-black/10 align-[-1px]" style={{ background: pk.wrapColor }} />}
             {wrap.name}
-            {pk.wrapMaterial !== 'none' && <span className="text-muted">· {WRAP_SHAPES.find((s) => s.id === pk.wrapShape)?.name.toLowerCase()}</span>}
+            {pk.wrapMaterial !== 'none' && <span className="block text-sm text-muted">{WRAP_SHAPES.find((s) => s.id === pk.wrapShape)?.name}</span>}
           </dd>
         </div>
         <div className="col-span-2 rounded-2xl bg-ivory/70 p-3">
@@ -65,6 +66,7 @@ export default function BouquetDetailPage() {
   const qc = useQueryClient()
   const { toast, confirm } = useFeedback()
   const viewer = useRef<ViewerHandle>(null)
+  const tone = useTone()
   const [rotate, setRotate] = useState(true)
   const { data, isPending, isError, error } = useQuery({ queryKey: ['bouquet', id], queryFn: () => Api.bouquet(id!), enabled: !!id })
 
@@ -104,7 +106,7 @@ export default function BouquetDetailPage() {
     )
 
   const s = data.summary
-  const created = s.createdAt.slice(0, 10)
+  const created = toDateOnly(new Date(s.createdAt))
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-10 lg:pt-10">
@@ -146,7 +148,7 @@ export default function BouquetDetailPage() {
 
         <article className="pb-6">
           <p className="inline-flex items-center gap-2 text-sm text-muted">
-            <Avatar name={s.owner.displayName} index={s.isMine ? 0 : 1} size="sm" />
+            <Avatar name={s.owner.displayName} index={tone(s.owner.username)} size="sm" />
             {s.isMine ? 'Senin buketin' : `${withSuffix(s.owner.displayName, 'gen')} buketi`}
           </p>
           <h1 className="mt-3 font-display text-[2.4rem] leading-[1.05] tracking-[-0.02em] text-ink md:text-[3rem]">{s.name}</h1>

@@ -24,7 +24,7 @@ builder.Services.Configure<StorageOptions>(config.GetSection("Storage"));
 builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
 builder.Services.AddProblemDetails();
 
-var storageSetting = config["Storage:Root"] ?? "storage";
+var storageSetting = config["Storage:Root"] ?? "App_Data";
 var storageRoot = Path.GetFullPath(Path.IsPathRooted(storageSetting)
     ? storageSetting
     : Path.Combine(builder.Environment.ContentRootPath, storageSetting));
@@ -90,12 +90,23 @@ if (behindProxy)
 
 builder.WebHost.ConfigureKestrel(kestrel => kestrel.Limits.MaxRequestBodySize = 12 * 1024 * 1024);
 
+// Geliştirmede yalnızca yöntem, yol ve durum kodu loglanır; gövde (şifreler dahil) asla loglanmaz.
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestMethod
+                            | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestPath
+                            | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.ResponseStatusCode
+                            | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.Duration;
+    options.CombineLogs = true;
+});
+
 var app = builder.Build();
 
 if (cliCommand is not null)
     return await AdminCli.RunAsync(app, cliCommand, args);
 
 if (behindProxy) app.UseForwardedHeaders();
+if (app.Environment.IsDevelopment()) app.UseHttpLogging();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler();

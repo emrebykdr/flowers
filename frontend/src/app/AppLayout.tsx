@@ -6,7 +6,7 @@ import { Wordmark } from '../components/brand'
 import { Avatar, Spinner } from '../components/ui'
 import { Api } from '../lib/api'
 import { cn } from '../lib/image'
-import { useMe } from './session'
+import { useMe, useTone } from './session'
 
 function useUnreadCount() {
   const { data } = useQuery({
@@ -43,6 +43,7 @@ function UnreadDot({ count, className }: { count: number; className?: string }) 
 
 function Sidebar({ unread }: { unread: number }) {
   const { user, partner, space } = useMe()
+  const tone = useTone()
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-[264px] flex-col border-r border-line/60 bg-cream px-5 pb-6 pt-8 lg:flex">
       <Link to="/" className="rounded-xl px-2 py-1">
@@ -73,8 +74,8 @@ function Sidebar({ unread }: { unread: number }) {
       <div className="mt-auto space-y-3">
         <div className="rounded-2xl border border-line/70 bg-paper p-3">
           <div className="flex items-center -space-x-2">
-            <Avatar name={user.displayName} index={0} />
-            {partner && <Avatar name={partner.displayName} index={1} />}
+            <Avatar name={user.displayName} index={tone(user.username)} />
+            {partner && <Avatar name={partner.displayName} index={tone(partner.username)} />}
           </div>
           <p className="mt-2 text-sm text-ink-soft">
             <span className="font-semibold text-ink">{user.displayName}</span> olarak giriş yaptın
@@ -99,6 +100,7 @@ function Sidebar({ unread }: { unread: number }) {
 
 function MobileTopBar() {
   const { user } = useMe()
+  const tone = useTone()
   return (
     <div className="sticky top-0 z-20 border-b border-line/50 bg-cream/85 pt-safe backdrop-blur-xl lg:hidden">
       <div className="flex h-14 items-center justify-between px-4">
@@ -110,7 +112,7 @@ function MobileTopBar() {
           className="flex h-11 items-center gap-2 rounded-full pl-1 pr-1 text-ink-soft"
           aria-label="Ayarlar"
         >
-          <Avatar name={user.displayName} index={0} size="sm" />
+          <Avatar name={user.displayName} index={tone(user.username)} size="sm" />
           <Settings2 className="size-5" strokeWidth={1.8} />
         </Link>
       </div>

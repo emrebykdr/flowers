@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { BookOpen, ImagePlus, Pencil, Plus, Search, Trash, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
-import { useMe } from '../../app/session'
+import { useMe, useTone } from '../../app/session'
 import { Sheet, useFeedback } from '../../components/feedback'
 import { Avatar, Button, Card, EmptyState, Field, PageHeader, Segmented, Skeleton, TextArea, TextInput } from '../../components/ui'
 import type { BouquetSummary, MemoryItem } from '../../domain/types'
@@ -25,6 +25,7 @@ function useDebounced<T>(value: T, ms = 250) {
 }
 
 function MemoryCard({ m, onOpen, tone }: { m: MemoryItem; onOpen: () => void; tone: number }) {
+  const avatarTone = useTone()
   return (
     <button type="button" onClick={onOpen} className="group block w-full rounded-[1.4rem] text-left outline-offset-4">
       {m.photoUrl ? (
@@ -47,7 +48,7 @@ function MemoryCard({ m, onOpen, tone }: { m: MemoryItem; onOpen: () => void; to
         <div className="mt-1 flex items-center justify-between gap-2 text-[13px] text-muted">
           <span className="truncate">{formatDate(m.date)}</span>
           <span className="inline-flex items-center gap-1.5">
-            <Avatar name={m.author.displayName} index={m.isMine ? 0 : 1} size="sm" />
+            <Avatar name={m.author.displayName} index={avatarTone(m.author.username)} size="sm" />
             {m.isMine ? 'Sen' : m.author.displayName}
           </span>
         </div>
@@ -215,6 +216,7 @@ function MemoryEditor({
 function MemoryDetail({ memory, onClose, onEdit }: { memory: MemoryItem | null; onClose: () => void; onEdit: () => void }) {
   const qc = useQueryClient()
   const { toast, confirm } = useFeedback()
+  const tone = useTone()
   const [deleting, setDeleting] = useState(false)
   return (
     <Sheet open={!!memory} onClose={onClose} title={memory?.title ?? ''} description={memory ? formatDate(memory.date) : undefined} size="lg">
@@ -223,7 +225,7 @@ function MemoryDetail({ memory, onClose, onEdit }: { memory: MemoryItem | null; 
           {memory.photoUrl && <img src={memory.photoUrl} alt="" className="max-h-[50dvh] w-full rounded-2xl object-cover" />}
           {memory.body && <p className="whitespace-pre-line font-display text-[1.15rem] leading-relaxed text-ink">{memory.body}</p>}
           <p className="inline-flex items-center gap-2 text-sm text-muted">
-            <Avatar name={memory.author.displayName} index={memory.isMine ? 0 : 1} size="sm" />
+            <Avatar name={memory.author.displayName} index={tone(memory.author.username)} size="sm" />
             {memory.isMine ? 'Sen yazdın' : `${withSuffix(memory.author.displayName, 'abl')}`}
           </p>
           {memory.bouquet && (
